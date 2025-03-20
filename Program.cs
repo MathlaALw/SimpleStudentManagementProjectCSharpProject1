@@ -8,6 +8,7 @@
         static string[] names = new string[10];
         static DateTime[] dates = new DateTime[10];
         static int StudentCounter = 0;
+        static int StudentNow;
         static void Main(string[] args)
         {
             while (true)
@@ -49,13 +50,81 @@
         static void AddNewStudent()
         {
 
-          
+
+            StudentNow = 3;
+            char doAgain;
+            do
+            {
+                Console.WriteLine("\nEnter Number of student to add :");
+                int n = int.Parse(Console.ReadLine());
+
+                if (n <= StudentNow)
+                {
+                    for (int i = 0; i <= n - 1; i++)
+                    {
+                        StudentCounter++;
+                        Console.WriteLine("Enter Student Names : ");
+                        names[i] = Console.ReadLine();
+                        Console.WriteLine("Enter Student Marks : ");
+                        marks[i] = int.Parse(Console.ReadLine());
+                        if (marks[i] < 0 || marks[i] > 100)
+                        {
+                            Console.WriteLine("invalid marks Enter Student Mark Again : ");
+                            marks[i] = int.Parse(Console.ReadLine());
+                        }
+
+                        Console.WriteLine("Enter Student Age : ");
+                        Ages[i] = int.Parse(Console.ReadLine());
+                        if (Ages[i] < 21)
+                        {
+                            Console.WriteLine("you cont add age less than 21 Enter Student Age Again :");
+                            Ages[i] = int.Parse(Console.ReadLine());
+                        }
+
+
+                        dates[i] = DateTime.Now;
+
+
+
+
+                    }
+                    StudentNow = StudentNow - n;
+                    // Console.WriteLine("The array have now " + StudentNow + " Space");
+                }
+                else if (StudentNow == 3)
+                {
+                    Console.WriteLine("The array is full ");
+                }
+                else
+                {
+                    Console.WriteLine("The array have now " + StudentNow + " Space");
+                }
+
+                // StudentNow = StudentNow;
+                Console.WriteLine(" \nDo you want another operation ? y / n \n");
+                doAgain = Console.ReadKey().KeyChar;
+
+            } while (doAgain == 'y' || doAgain == 'Y');
+
+            //Console.WriteLine("\ngoodbye");
 
         }
 
         static void ViewAllStudent()
         {
 
+            for (int i = 0; i < StudentCounter; i++)
+            {
+
+                Console.WriteLine(names[i]);
+                Console.WriteLine(marks[i]);
+                Console.WriteLine(Ages[i]);
+                Console.WriteLine(dates[i]);
+
+
+
+
+            }
 
 
         }
