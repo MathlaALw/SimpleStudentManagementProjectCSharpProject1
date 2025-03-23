@@ -4,11 +4,11 @@
     {
 
         static double[] marks = new double[10];
-        static int[] Ages = new int[10];
+        static int[] ages = new int[10];
         static string[] names = new string[10];
         static DateTime[] dates = new DateTime[10];
         static int StudentCounter = 0;
-        static int StudentNow;
+        static int maxStudent = 10;
         static void Main(string[] args)
         {
             while (true)
@@ -50,96 +50,141 @@
         static void AddNewStudent()
         {
 
-
-            StudentNow = 3;
             char doAgain;
             do
             {
-                Console.WriteLine("\nEnter Number of student to add :");
-                int n = int.Parse(Console.ReadLine());
+                Console.WriteLine("\nEnter Number of students to add:");
+                int numberOfStudent = int.Parse(Console.ReadLine());
 
-                if (n <= StudentNow)
+                if (numberOfStudent + StudentCounter <= maxStudent)
                 {
-                    for (int i = 0; i <= n - 1; i++)
+                    for (int i = StudentCounter; i < StudentCounter + numberOfStudent; i++)
                     {
-                        StudentCounter++;
-                        Console.WriteLine("Enter Student Names : ");
+                        Console.WriteLine("Enter Student Name:");
                         names[i] = Console.ReadLine();
-                        Console.WriteLine("Enter Student Marks : ");
+
+                        Console.WriteLine("Enter Student Marks: ");
                         marks[i] = int.Parse(Console.ReadLine());
-                        if (marks[i] < 0 || marks[i] > 100)
+                        if (marks[i] <= 0 || marks[i] >= 100)
                         {
                             Console.WriteLine("invalid marks Enter Student Mark Again : ");
                             marks[i] = int.Parse(Console.ReadLine());
                         }
 
                         Console.WriteLine("Enter Student Age : ");
-                        Ages[i] = int.Parse(Console.ReadLine());
-                        if (Ages[i] < 21)
+                        ages[i] = int.Parse(Console.ReadLine());
+                        if (ages[i] < 21)
                         {
                             Console.WriteLine("you cont add age less than 21 Enter Student Age Again :");
-                            Ages[i] = int.Parse(Console.ReadLine());
+                            ages[i] = int.Parse(Console.ReadLine());
                         }
 
 
                         dates[i] = DateTime.Now;
 
-
-
-
+                        Console.WriteLine("Student Added Successfully");
                     }
-                    StudentNow = StudentNow - n;
-                    // Console.WriteLine("The array have now " + StudentNow + " Space");
+                    StudentCounter = StudentCounter + numberOfStudent;
                 }
-                else if (StudentNow == 3)
+                else if (StudentCounter == maxStudent)
                 {
-                    Console.WriteLine("The array is full ");
+                    Console.WriteLine("Maximum number of students reached. No more students can be added.");
                 }
                 else
                 {
-                    Console.WriteLine("The array have now " + StudentNow + " Space");
+                    Console.WriteLine($"Invalid input. you cant enter number greater then  {maxStudent} the remainnig space is {maxStudent - StudentCounter}");
+
+
                 }
 
-                // StudentNow = StudentNow;
-                Console.WriteLine(" \nDo you want another operation ? y / n \n");
+                Console.WriteLine("\nDo you want to add more students? (y/n)");
                 doAgain = Console.ReadKey().KeyChar;
 
             } while (doAgain == 'y' || doAgain == 'Y');
 
-            //Console.WriteLine("\ngoodbye");
 
         }
 
+        
+
         static void ViewAllStudent()
         {
-
-            for (int i = 0; i < StudentCounter; i++)
+            if (StudentCounter == 0)
             {
-
-                Console.WriteLine(names[i]);
-                Console.WriteLine(marks[i]);
-                Console.WriteLine(Ages[i]);
-                Console.WriteLine(dates[i]);
-
-
-
+                Console.WriteLine("No student record found.");
 
             }
+            else
+            {
+                for (int i = 0; i < StudentCounter; i++)
+                {
 
+                    Console.WriteLine(names[i]);
+                    Console.WriteLine(marks[i]);
+                    Console.WriteLine(ages[i]);
+                    Console.WriteLine(dates[i]);
+
+
+
+
+                }
+            }
 
         }
 
         static void FindStudent()
         {
-          
+            bool found;
+            do
+            {
+
+
+                Console.Write("Enter student name: ");
+                string searchName = Console.ReadLine();
+                searchName.ToLower();
+                found = false;
+
+
+                for (int i = 0; i < StudentCounter; i++)
+                {
+                    string LowerNames = names[i].ToLower();
+
+                    if (LowerNames == searchName)
+                    {
+
+                        Console.WriteLine(names[i]);
+                        Console.WriteLine(marks[i]);
+                        Console.WriteLine(ages[i]);
+                        Console.WriteLine(dates[i]);
+                        found = true;
+                        break;
+                    }
+
+                }
+
+                if (!found)
+                {
+                    Console.WriteLine("Not found. Try again.");
+                }
+            } while (!found);
         }
 
          static void CalculateAverage()
         {
+            if (StudentCounter == 0)
+            {
+                Console.WriteLine("No student record found.");
 
+            }
+            double sum = 0;
+            for (int i = 0; i < StudentCounter; i++)
+            {
+                sum = sum + marks[i];
+            }
+            double average = sum / StudentCounter;
+            Console.WriteLine("The class average is: " + Math.Round(average));
 
-
-         }
+        }
 
         static void FindTopPerformingStudent()
          {
