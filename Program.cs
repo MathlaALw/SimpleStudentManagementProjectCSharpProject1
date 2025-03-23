@@ -189,9 +189,28 @@
         static void FindTopPerformingStudent()
          {
 
+            if (StudentCounter == 0)
+            {
+                Console.WriteLine("No students available.");
+
+            }
+
+            int topIndex = 0;
+            for (int i = 1; i < StudentCounter; i++)
+            {
+                if (marks[i] > marks[topIndex])
+                {
+                    topIndex = i;
+
+                }
+            }
+            Console.WriteLine(names[topIndex]);
+            Console.WriteLine(marks[topIndex]);
+            Console.WriteLine(ages[topIndex]);
+            Console.WriteLine(dates[topIndex]);
 
 
-         }
+        }
         static void SortStudents()
          {
 
