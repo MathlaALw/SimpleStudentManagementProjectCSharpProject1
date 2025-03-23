@@ -67,12 +67,12 @@
                         {
                             Console.WriteLine("Enter Student Marks: ");
                             marks[i] = int.Parse(Console.ReadLine());
-                            if (marks[i] <= 0 || marks[i] >= 100)
+                            if (marks[i] < 0 || marks[i] > 100)
                             {
                                 Console.WriteLine("invalid marks.The mark should be between ( 0 - 100 ). ");
                             }
 
-                        } while (marks[i] <= 0 || marks[i] >= 100);
+                        } while (marks[i] < 0 || marks[i] > 100);
                         do
                         {
                             Console.WriteLine("Enter Student Age : ");
@@ -92,16 +92,16 @@
                 }
                 else if (StudentCounter == maxStudent)
                 {
-                    Console.WriteLine($"Maximum number of students reached. No more students can be added.");
+                    Console.WriteLine("Maximum number of students reached. No more students can be added.");
                 }
                 else
                 {
-                    Console.WriteLine($"Invalid input. you cant enter number greater then  {maxStudent} the remaining space is {maxStudent - StudentCounter}");
+                    Console.WriteLine($"Invalid input . the remaining space is {maxStudent - StudentCounter}");
 
 
                 }
 
-                Console.WriteLine("\nDo you want to add more students? (y/n)");
+                Console.WriteLine("\n Do you want to add more students? (y/n) \n");
                 doAgain = Console.ReadKey().KeyChar;
 
             } while (doAgain == 'y' || doAgain == 'Y');
