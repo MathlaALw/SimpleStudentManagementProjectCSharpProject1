@@ -50,6 +50,7 @@
         static void AddNewStudent()
         {
 
+
             char doAgain;
             do
             {
@@ -62,37 +63,40 @@
                     {
                         Console.WriteLine("Enter Student Name:");
                         names[i] = Console.ReadLine();
-
-                        Console.WriteLine("Enter Student Marks: ");
-                        marks[i] = int.Parse(Console.ReadLine());
-                        if (marks[i] <= 0 || marks[i] >= 100)
+                        do
                         {
-                            Console.WriteLine("invalid marks Enter Student Mark Again : ");
+                            Console.WriteLine("Enter Student Marks: ");
                             marks[i] = int.Parse(Console.ReadLine());
-                        }
+                            if (marks[i] <= 0 || marks[i] >= 100)
+                            {
+                                Console.WriteLine("invalid marks.The mark should be between ( 0 - 100 ). ");
+                            }
 
-                        Console.WriteLine("Enter Student Age : ");
-                        ages[i] = int.Parse(Console.ReadLine());
-                        if (ages[i] < 21)
+                        } while (marks[i] <= 0 || marks[i] >= 100);
+                        do
                         {
-                            Console.WriteLine("you cont add age less than 21 Enter Student Age Again :");
+                            Console.WriteLine("Enter Student Age : ");
                             ages[i] = int.Parse(Console.ReadLine());
-                        }
+                            if (ages[i] < 21)
+                            {
+                                Console.WriteLine("you cont add age less than 21 .");
 
+                            }
+                        } while (ages[i] < 21);
 
                         dates[i] = DateTime.Now;
 
-                        Console.WriteLine("Student Added Successfully");
+                        Console.WriteLine("Student Added Successfully .");
                     }
                     StudentCounter = StudentCounter + numberOfStudent;
                 }
                 else if (StudentCounter == maxStudent)
                 {
-                    Console.WriteLine("Maximum number of students reached. No more students can be added.");
+                    Console.WriteLine($"Maximum number of students reached. No more students can be added.");
                 }
                 else
                 {
-                    Console.WriteLine($"Invalid input. you cant enter number greater then  {maxStudent} the remainnig space is {maxStudent - StudentCounter}");
+                    Console.WriteLine($"Invalid input. you cant enter number greater then  {maxStudent} the remaining space is {maxStudent - StudentCounter}");
 
 
                 }
@@ -103,9 +107,12 @@
             } while (doAgain == 'y' || doAgain == 'Y');
 
 
+
+
+
         }
 
-        
+
 
         static void ViewAllStudent()
         {
