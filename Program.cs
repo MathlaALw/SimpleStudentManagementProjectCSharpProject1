@@ -11,39 +11,50 @@
         static int maxStudent = 10;
         static void Main(string[] args)
         {
-            while (true)
+            try
             {
-                //Menu System
-                Console.Clear();
-                Console.WriteLine("\nSelect a Program:");
-                Console.WriteLine("1. Add a new student");
-                Console.WriteLine("2. View all students");
-                Console.WriteLine("3. Find a student");
-                Console.WriteLine("4. Calculate the class average");
-                Console.WriteLine("5. Find the top-performing student");
-                Console.WriteLine("6. Sort students by marks");
-                Console.WriteLine("7. Delete a student record ");
-                Console.WriteLine("8. Exit");
-
-
-                Console.Write("Enter your choice : ");
-                int choice = int.Parse(Console.ReadLine());
-
-                switch (choice)
+                while (true)
                 {
-                    case 1: AddNewStudent(); break;
-                    case 2: ViewAllStudent(); break;
-                    case 3: FindStudent(); break;
-                    case 4: CalculateAverage(); break;
-                    case 5: FindTopPerformingStudent(); break;
-                    case 6: SortStudents(); break;
-                    case 7: DeleteStudent(); break;
-                    case 8: return;
+                    //Menu System
+                    Console.Clear();
+                    Console.WriteLine("\nSelect a Program:");
+                    Console.WriteLine("1. Add a new student");
+                    Console.WriteLine("2. View all students");
+                    Console.WriteLine("3. Find a student");
+                    Console.WriteLine("4. Calculate the class average");
+                    Console.WriteLine("5. Find the top-performing student");
+                    Console.WriteLine("6. Sort students by marks");
+                    Console.WriteLine("7. Delete a student record ");
+                    Console.WriteLine("8. Exit");
 
-                    default: Console.WriteLine("Invalid Choice! Try again."); break;
+
+                    Console.Write("Enter your choice : ");
+                    Console.Write("Enter your choice : ");
+                    if (!int.TryParse(Console.ReadLine(), out int choice))
+                    {
+
+                    }
+
+                    switch (choice)
+                    {
+                        case 1: AddNewStudent(); break;
+                        case 2: ViewAllStudent(); break;
+                        case 3: FindStudent(); break;
+                        case 4: CalculateAverage(); break;
+                        case 5: FindTopPerformingStudent(); break;
+                        case 6: SortStudents(); break;
+                        case 7: DeleteStudent(); break;
+                        case 8: return;
+
+                        default: Console.WriteLine("Invalid Choice! Try again."); break;
+                    }
+                    Console.WriteLine("Press any key  ");
+                    Console.ReadLine();
                 }
-                Console.WriteLine("Press any key ");
-                Console.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
 
@@ -64,35 +75,80 @@
                     // start looping from student counter until the total of  student counter and number of student witch the user entered 
                     for (int i = StudentCounter; i < StudentCounter + numberOfStudent; i++)
                     {
-                        //ask for student name
-                        Console.WriteLine("Enter Student Name:");
-                        names[i] = Console.ReadLine();
-                        //keep ask user for student marks until the user take number in range of (0-100).
-                        do
-                        {
-                            //ask for student marks
-                            Console.WriteLine("Enter Student Marks: ");
-                            marks[i] = int.Parse(Console.ReadLine());
-                            if (marks[i] < 0 || marks[i] > 100) //show message if The mark out of range .
+                        string stringName = ""; //Declare and initialize stringName
+                        bool found = false; //Declare and initialize found
+                        do 
+                        { 
+                            //ask for student name
+                            Console.WriteLine("Enter Student Name:"); //ask user for student name
+                            names[i] = Console.ReadLine();
+                            stringName = names[i]; //assign the name to stringName
+
+
+                            if (string.IsNullOrWhiteSpace(stringName)) //show message if the name is empty
                             {
-                                Console.WriteLine("invalid marks.The mark should be between ( 0 - 100 ).");
+                                Console.WriteLine("Name cannot be empty. Please try again.");
+                                found = false; 
+
                             }
+                            else if (string.Format(stringName).Length < 3) //show message if the name less than 3 characters
+                            {
+                                Console.WriteLine("Name should be at least 3 characters long. Please try again.");
+
+                                found = false;
+                            }
+                            else if (int.TryParse(stringName, out int result)) //show message if the name is number
+                            {
+                                Console.WriteLine("Invalid input! Please enter a string");
+                            }
+                            else //if the name is valid
+                            {
+                                found = true;
+                                names[i] = stringName;//assign the name to names array
+                                break;
+                            }
+                        } while (!found); //keep asking user for name until the name is valid
 
 
+
+
+                        do //keep ask user for student marks until the user take number in range of (0-100).
+                        {
+                            try
+                            {
+                                //ask for student marks
+                                Console.WriteLine("Enter Student Marks: ");
+                                marks[i] = int.Parse(Console.ReadLine());
+                                if (marks[i] < 0 || marks[i] > 100) //show message if The mark out of range .
+                                {
+                                    Console.WriteLine("invalid marks.The mark should be between ( 0 - 100 ).");
+                                }
+
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
                         } while (marks[i] < 0 || marks[i] > 100);
 
-                        //keep ask user for student Ages until the user take number less than 21.
+                        
                         do
                         {
-                            Console.WriteLine("Enter Student Age : ");
-                            ages[i] = int.Parse(Console.ReadLine());
-                            if (ages[i] < 21) // show message if ages[i] less than 21
+                            try
                             {
-                                Console.WriteLine("you cont add age less than 21 .");
-
+                                Console.WriteLine("Enter Student Age : ");
+                                ages[i] = int.Parse(Console.ReadLine());
+                                if (ages[i] < 21) // show message if ages[i] less than 21
+                                {
+                                    Console.WriteLine("you cont add age less than 21 .");
+                                }
                             }
+                            catch (Exception e) //show message if the user enter invalid input
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+                        } while (ages[i] < 21);//keep ask user for student Ages until the user take number less than 21.
 
-                        } while (ages[i] < 21);
 
                         //insert date direct in dates array.
                         dates[i] = DateTime.Now;
@@ -117,7 +173,7 @@
                 Console.WriteLine("\n Do you want to add more students? (y/n) \n");
                 doAgain = Console.ReadKey().KeyChar;
 
-            } while (doAgain == 'y' || doAgain == 'Y');
+            } while (doAgain == 'y' || doAgain == 'Y'); //if the user enter y or Y keep asking for adding more student
 
 
 
@@ -164,27 +220,41 @@
                 searchName.ToLower(); // convert the student name in lowercase
                 found = false; //initialize found
 
-
-                for (int i = 0; i < StudentCounter; i++) //start looping from 0 until reach all student that are available in array
+                if (string.IsNullOrWhiteSpace(searchName))//show message if the name is empty
                 {
-                    string LowerNames = names[i].ToLower();// convert the student name in lowercase ( names array)
-
-                    if (LowerNames == searchName) //compar between user entered name and the name in array (if are match )
-                    {
-                        //show the students detailes
-                        Console.WriteLine("Student Name : " + names[i]);
-                        Console.WriteLine("Student Mark : " + marks[i]);
-                        Console.WriteLine("Student Age : " + ages[i]);
-                        Console.WriteLine("Student Enrllment Date : " + dates[i]);
-                        found = true;
-                        break;
-                    }
+                    Console.WriteLine("Name cannot be empty. Please try again.");
+                    found = false;
 
                 }
 
-                if (!found) //Show "Not found. Try again." if names are not match
+                else if (int.TryParse(searchName, out int result))//show message if the name is number
                 {
-                    Console.WriteLine("Not found. Try again.");
+                    Console.WriteLine("Invalid input! Please enter a string");
+                }
+                else //if the name is valid
+                {
+
+                    for (int i = 0; i < StudentCounter; i++) //start looping from 0 until reach all student that are available in array
+                    {
+                        string LowerNames = names[i].ToLower();// convert the student name in lowercase ( names array)
+
+                        if (LowerNames == searchName) //compar between user entered name and the name in array (if are match )
+                        {
+                            //show the students detailes
+                            Console.WriteLine("Student Name : " + names[i]);
+                            Console.WriteLine("Student Mark : " + marks[i]);
+                            Console.WriteLine("Student Age : " + ages[i]);
+                            Console.WriteLine("Student Enrllment Date : " + dates[i]);
+                            found = true;
+                            break;
+                        }
+
+                    }
+
+                    if (!found) //Show "Not found. Try again." if names are not match
+                    {
+                        Console.WriteLine("Not found. Try again.");
+                    }
                 }
             } while (!found);
         }
@@ -301,23 +371,35 @@
                 Console.Write("Enter student name to delete: ");
                 string deleteName = Console.ReadLine();
                 deleteName.ToLower(); //convert the user input to lowercase
-
                 indexToDelete = -1;  //initialize 
-                for (int i = 0; i < StudentCounter; i++)//start looping from 0 until reach all student that are available in array
+                if (string.IsNullOrWhiteSpace(deleteName)) //show message if the name is empty
                 {
-                    string LowerNames = names[i].ToLower();//convert the names in names array to lowercase
-                    if (LowerNames == deleteName)
-                    {
-                        indexToDelete = i; //assign index of name in indexToDelete
+                    Console.WriteLine("Name cannot be empty. Please try again.");
 
-                    }
-                    else  //(indexToDelete == -1)
-                    {
-                        Console.WriteLine("Student not found.");
 
-                    }
                 }
 
+                else if (int.TryParse(deleteName, out int result)) //show message if the name is number
+                {
+                    Console.WriteLine("Invalid input! Please enter a string");
+                }
+                else
+                {
+                    for (int i = 0; i < StudentCounter; i++)//start looping from 0 until reach all student that are available in array
+                    {
+                        string LowerNames = names[i].ToLower();//convert the names in names array to lowercase
+                        if (LowerNames == deleteName)
+                        {
+                            indexToDelete = i; //assign index of name in indexToDelete
+
+                        }
+                        else  //(indexToDelete == -1)
+                        {
+                            Console.WriteLine("Student not found.");
+
+                        }
+                    }
+                }
 
 
             } while (indexToDelete == -1);
