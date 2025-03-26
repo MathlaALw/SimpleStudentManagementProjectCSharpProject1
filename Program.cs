@@ -28,7 +28,7 @@
 
                 int choice = 0; //Declare and initialize choice
                 bool found = false;//Declare and initialize found
-                try //try to parse the user input
+                try //handle the exception if the user enter invalid input
                 {
                     Console.Write("Enter your choice : ");
                     choice = int.Parse(Console.ReadLine());
@@ -129,7 +129,7 @@
 
                         do //keep ask user for student marks until the user take number in range of (0-100).
                         {
-                            try
+                            try //handle the exception if the user enter invalid input
                             {
                                 //ask for student marks
                                 Console.WriteLine("Enter Student Marks: ");
@@ -140,7 +140,7 @@
                                 }
 
                             }
-                            catch (Exception e)
+                            catch (Exception e) 
                             {
                                 Console.WriteLine(e.Message);
                             }
@@ -149,7 +149,7 @@
                         
                         do
                         {
-                            try
+                            try//handle the exception if the user enter invalid input
                             {
                                 Console.WriteLine("Enter Student Age : ");
                                 ages[i] = int.Parse(Console.ReadLine());
