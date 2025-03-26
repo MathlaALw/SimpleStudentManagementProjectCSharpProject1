@@ -11,45 +11,27 @@
         static int maxStudent = 10;
         static void Main(string[] args)
         {
-
+            int choice = 0; //Declare and initialize choice
             while (true)
             {
-                //Menu System
-                Console.Clear();
-                Console.WriteLine("\nSelect a Program:");
-                Console.WriteLine("1. Add a new student");
-                Console.WriteLine("2. View all students");
-                Console.WriteLine("3. Find a student");
-                Console.WriteLine("4. Calculate the class average");
-                Console.WriteLine("5. Find the top-performing student");
-                Console.WriteLine("6. Sort students by marks");
-                Console.WriteLine("7. Delete a student record ");
-                Console.WriteLine("8. Exit");
-
-                int choice = 0; //Declare and initialize choice
-                bool found = false;//Declare and initialize found
+                
                 try //handle the exception if the user enter invalid input
                 {
+                    //Menu System
+                    Console.Clear();
+                    Console.WriteLine("\nSelect a Program:");
+                    Console.WriteLine("1. Add a new student");
+                    Console.WriteLine("2. View all students");
+                    Console.WriteLine("3. Find a student");
+                    Console.WriteLine("4. Calculate the class average");
+                    Console.WriteLine("5. Find the top-performing student");
+                    Console.WriteLine("6. Sort students by marks");
+                    Console.WriteLine("7. Delete a student record ");
+                    Console.WriteLine("8. Exit");
+
+                
                     Console.Write("Enter your choice : ");
                     choice = int.Parse(Console.ReadLine());
-
-                }
-                catch (Exception e)//show exception message if the user enter invalid input
-                {
-                    Console.WriteLine(e.Message);
-                   
-                    found = true;
-                }
-
-
-                if (!found) //show message if the user enter invalid input 
-                {
-                    Console.WriteLine("Invalid Choice! Try again.");
-                    Console.WriteLine("Press any key  ");
-                    Console.ReadLine();
-                }
-                else //show the user choice
-                {
                     switch (choice)
                     {
                         case 1: AddNewStudent(); break;
@@ -65,7 +47,18 @@
                     }
                     Console.WriteLine("Press any key  "); //ask user to press any key to continue
                     Console.ReadLine(); //read the user input
+
                 }
+                catch (Exception e)//show exception message if the user enter invalid input
+                {
+                    Console.WriteLine(e.Message);
+                   
+                
+                    Console.WriteLine("Invalid Choice! Try again.");
+                    Console.WriteLine("Press any key  "); //ask user to press any key to continue
+                    Console.ReadLine(); //read the user inputConsole.ReadLine();
+                }
+
             }
         }
 
