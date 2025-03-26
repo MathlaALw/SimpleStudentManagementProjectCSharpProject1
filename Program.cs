@@ -11,30 +11,45 @@
         static int maxStudent = 10;
         static void Main(string[] args)
         {
-            try
+
+            while (true)
             {
-                while (true)
+                //Menu System
+                Console.Clear();
+                Console.WriteLine("\nSelect a Program:");
+                Console.WriteLine("1. Add a new student");
+                Console.WriteLine("2. View all students");
+                Console.WriteLine("3. Find a student");
+                Console.WriteLine("4. Calculate the class average");
+                Console.WriteLine("5. Find the top-performing student");
+                Console.WriteLine("6. Sort students by marks");
+                Console.WriteLine("7. Delete a student record ");
+                Console.WriteLine("8. Exit");
+
+                int choice = 0; //Declare and initialize choice
+                bool found = false;//Declare and initialize found
+                try //try to parse the user input
                 {
-                    //Menu System
-                    Console.Clear();
-                    Console.WriteLine("\nSelect a Program:");
-                    Console.WriteLine("1. Add a new student");
-                    Console.WriteLine("2. View all students");
-                    Console.WriteLine("3. Find a student");
-                    Console.WriteLine("4. Calculate the class average");
-                    Console.WriteLine("5. Find the top-performing student");
-                    Console.WriteLine("6. Sort students by marks");
-                    Console.WriteLine("7. Delete a student record ");
-                    Console.WriteLine("8. Exit");
-
-
                     Console.Write("Enter your choice : ");
-                    Console.Write("Enter your choice : ");
-                    if (!int.TryParse(Console.ReadLine(), out int choice))
-                    {
+                    choice = int.Parse(Console.ReadLine());
 
-                    }
+                }
+                catch (Exception e)//show exception message if the user enter invalid input
+                {
+                    Console.WriteLine(e.Message);
+                   
+                    found = true;
+                }
 
+
+                if (!found) //show message if the user enter invalid input 
+                {
+                    Console.WriteLine("Invalid Choice! Try again.");
+                    Console.WriteLine("Press any key  ");
+                    Console.ReadLine();
+                }
+                else //show the user choice
+                {
                     switch (choice)
                     {
                         case 1: AddNewStudent(); break;
@@ -48,13 +63,9 @@
 
                         default: Console.WriteLine("Invalid Choice! Try again."); break;
                     }
-                    Console.WriteLine("Press any key  ");
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key  "); //ask user to press any key to continue
+                    Console.ReadLine(); //read the user input
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
             }
         }
 
@@ -66,9 +77,13 @@
             char doAgain;
             do
             {
+
                 //ask user for  number of student .
                 Console.WriteLine("\nEnter Number of students to add:");
                 int numberOfStudent = int.Parse(Console.ReadLine());
+
+
+
                 // check the total student if less than or equal the maxStudent (10) .
                 if (numberOfStudent + StudentCounter <= maxStudent)
                 {
@@ -219,8 +234,14 @@
                 string searchName = Console.ReadLine();
                 searchName.ToLower(); // convert the student name in lowercase
                 found = false; //initialize found
+                if (StudentCounter == 0) // if student counter == 0 show massege "No student record found.".
+                {
+                    Console.WriteLine("No student record found.");
+                    found = false;
+                    break;
 
-                if (string.IsNullOrWhiteSpace(searchName))//show message if the name is empty
+                }
+                else if (string.IsNullOrWhiteSpace(searchName))//show message if the name is empty
                 {
                     Console.WriteLine("Name cannot be empty. Please try again.");
                     found = false;
@@ -231,8 +252,10 @@
                 {
                     Console.WriteLine("Invalid input! Please enter a string");
                 }
+               
                 else //if the name is valid
                 {
+
 
                     for (int i = 0; i < StudentCounter; i++) //start looping from 0 until reach all student that are available in array
                     {
@@ -249,13 +272,14 @@
                             break;
                         }
 
-                    }
 
+                    }
+                }
                     if (!found) //Show "Not found. Try again." if names are not match
                     {
                         Console.WriteLine("Not found. Try again.");
                     }
-                }
+                
             } while (!found);
         }
         //Calculate the class average
